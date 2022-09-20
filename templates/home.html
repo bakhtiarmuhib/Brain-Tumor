@@ -1,41 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html>
+  <head>
+    <link
+      class="jsbin"
+      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      class="jsbin"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+    ></script>
+    <script
+      class="jsbin"
+      src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"
+    ></script>
+    <meta charset="utf-8" />
+    <title>Brain tumor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-    <form action="">
-        <div class="form-group mb-3">
-            <label for="avatar" class="control-label">User Avatar</label>
-            <input type="file" class="form-control rounded-0" name="avatar" id="avatar" onchange="DisplayImage(this)" accept="images/*" >
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+      article,
+      aside,
+      figure,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      section {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h2>Brain Tumor Detection</h2>
+            </div>
         </div>
-        <div class="form-group mb-3 text-center">
-            <img src="{% if faculty.avatar %}{{ faculty.avatar.url }}{% else %}{{ MEDIA_URL }}default/default-icon.png{% endif %}" class="img-fluid img-thumbnail bg-gradient bg-dark w-100" id="user-avatar-modal" alt="">
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4 pt-4 ">
+                <form action="/" method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <div>
+                        <input type="file" name="image1" accept="image/*" onchange="readURL(this);" />
+                    </div>
+                    <div class="pt-2">
+                        <img id="blah" src="#" alt="your image" />
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" value="Submit" class="btn btn-success">Submit</button>
+                    </div>
+                    
+                </form>
+            </div>
         </div>
-        
-    </form>
-
-
+    </div>
 
     <script>
-        function DisplayImage(input) {
-            console.log(input.files)
-            if (event.target.files[0]) {
+        function readURL(input) {
+            if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                reader.onload = function() {
-                    var output = $('#user-avatar-modal');
-                    output.attr('src', reader.result)
+
+                reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result).width(150).height(200);
                 };
+
                 reader.readAsDataURL(input.files[0]);
             }
-    
-        };
+            }
     </script>
-</body>
-
-
+  </body>
 </html>
